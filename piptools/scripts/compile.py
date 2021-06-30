@@ -228,10 +228,10 @@ def _get_default_option(option_name: str) -> Any:
     help="Add options to generated file",
 )
 @click.option(
-    "--write-deps",
-    is_flag=True,
+    "--no-deps",
+    is_flag=False,
     default=False,
-    help="Write subdependencies of packages to output file. If not specified,"
+    help="Don't write subdependencies of packages to output file. If specified,"
     "--allow-unsafe flag must be set.",
 )
 def cli(
@@ -266,7 +266,7 @@ def cli(
     pip_args_str: Optional[str],
     emit_index_url: bool,
     emit_options: bool,
-    write_deps: bool
+    no_deps: bool
 ) -> None:
     """Compiles requirements.txt from requirements.in specs."""
     log.verbosity = verbose - quiet
@@ -458,7 +458,7 @@ def cli(
             cache=DependencyCache(cache_dir),
             clear_caches=rebuild,
             allow_unsafe=allow_unsafe,
-            write_deps=write_deps
+            no_deps=no_deps
         )
         results = resolver.resolve(max_rounds=max_rounds)
         hashes = resolver.resolve_hashes(results) if generate_hashes else None
