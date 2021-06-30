@@ -116,6 +116,7 @@ class Resolver:
         prereleases: Optional[bool] = False,
         clear_caches: bool = False,
         allow_unsafe: bool = False,
+        write_deps: bool = False
     ) -> None:
         """
         This class resolves a given set of constraints (a collection of
@@ -129,6 +130,7 @@ class Resolver:
         self.prereleases = prereleases
         self.clear_caches = clear_caches
         self.allow_unsafe = allow_unsafe
+        self.write_deps = write_deps
         self.unsafe_constraints: Set[InstallRequirement] = set()
 
     @property
@@ -272,9 +274,10 @@ class Resolver:
         log.debug("Finding secondary dependencies:")
 
         their_constraints: List[InstallRequirement] = []
-        with log.indentation():
-            for best_match in best_matches:
-                their_constraints.extend(self._iter_dependencies(best_match))
+        if self.write_deps:
+            with log.indentation():
+                for best_match in best_matches:
+                    their_constraints.extend(self._iter_dependencies(best_match))
         # Grouping constraints to make clean diff between rounds
         theirs = set(self._group_constraints(their_constraints))
 
