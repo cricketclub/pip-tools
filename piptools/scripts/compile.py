@@ -229,7 +229,7 @@ def _get_default_option(option_name: str) -> Any:
 )
 @click.option(
     "--no-deps",
-    is_flag=False,
+    is_flag=True,
     default=False,
     help="Don't write subdependencies of packages to output file. If specified,"
     "--allow-unsafe flag must be set.",
