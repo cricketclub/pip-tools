@@ -231,7 +231,7 @@ def _get_default_option(option_name: str) -> Any:
     "--write-deps",
     is_flag=True,
     default=False,
-    help="Write subdependencies of specified packages to output file. If not specified,"
+    help="Write subdependencies of packages to output file. If not specified,"
     "--allow-unsafe flag must be set.",
 )
 def cli(
